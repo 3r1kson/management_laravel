@@ -32,6 +32,34 @@ php artisan migrate:reset   - revert/rollback all migrations
 php artisan migrate:refresh - rollback and migrate all migrations
 php artisan migrate:fresh   - drop all objects from database and execute migration
 
+
 Interactive console (TINKER)
 
 php artisan tinker
+
+Inserting data on database via tinker:
+>>> \App\Fornecedor::create(['nome'=>'Fornecedor ABC', 'site'=>'forncedorabc.com.br', 'uf'=>'SP', 'email'=>'contato@fornecedorabc.com.br']);
+Getting data from database:
+$fornecedores = \App\Fornecedor::all();
+
+
+Is possible to print those values as well:
+print_r($fornecedores->toArray());
+
+
+Get specific or multiple object(s) from database:
+$fornecedores = Fornecedor::find(2);
+$fornecedores = Fornecedor::find([1, 2, 3]);
+$contatos = SiteContato::where('column name', 'operator for comparison', 'value')->get();
+- operators: >, >=, <, <=, <>, ==, like
+
+Complex use of where:
+$contatos = SiteContato::whereIn('value to compare', 'params');
+$contatos = SiteContato::whereNotIn('value to compare', 'params');
+ex: $contatos = SiteContato::whereIn('motivo_contato', [1, 3])->get();
+
+$contatos = SiteContato::whereBetween('value to compare', 'params');
+$contatos = SiteContato::whereNotBetween('value to compare', 'params');
+ex: $contatos = SiteContato::whereBetween('motivo_contato', [1, 3])->get();
+
+$contatos = SiteContato::where('nome', '<>', 'Fernando')->whereIn('motivo_contato', [1, 2])->get();

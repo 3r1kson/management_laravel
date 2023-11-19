@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-// Eloquent name method
+// Eloquent naming method:
 // Site_Contato
 // site_contato
 // site_contatos
@@ -12,4 +12,5 @@ use Illuminate\Database\Eloquent\Model;
 class SiteContato extends Model
 {
     //
+
 }
