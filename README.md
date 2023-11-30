@@ -149,3 +149,9 @@ Recovering rows that were deleted with softDelete:
 
 >>> $fornecedores = Fornecedor::onlyTrashed()->get(); - creating a variable to receive deleted rows.
 >>> $fornecedores[0]->restore(); -restoring row that was deleted.
+
+Running seeders - necessary to insert runner into DatabaseSeeder.php:
+>>>php artisan db:seed
+
+Run specific seeder:
+>>> php artisan db:seed --class=SiteContatoSeeder
