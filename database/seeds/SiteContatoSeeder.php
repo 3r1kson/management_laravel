@@ -13,12 +13,13 @@ class SiteContatoSeeder extends Seeder
     public function run()
     {
         //
-        $contato = new SiteContato();
-        $contato->nome = "Tunico";
-        $contato->telefone = "(11) 9988-8877";
-        $contato->email = "contato@sg.com.br";
-        $contato->motivo_contato = "1";
-        $contato->mensagem = "Truco papudos";
-        $contato->save();
+        // $contato = new SiteContato();
+        // $contato->nome = "Tunico";
+        // $contato->telefone = "(11) 9988-8877";
+        // $contato->email = "contato@sg.com.br";
+        // $contato->motivo_contato = "1";
+        // $contato->mensagem = "Truco papudos";
+        // $contato->save();
+        factory(SiteContato::class,100)->create();
     }
 }

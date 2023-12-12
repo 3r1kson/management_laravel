@@ -155,3 +155,6 @@ Running seeders - necessary to insert runner into DatabaseSeeder.php:
 
 Run specific seeder:
 >>> php artisan db:seed --class=SiteContatoSeeder
+
+Creating a factory:
+>>> php artisan make:factory SiteContatoFactory --model=SiteContato
