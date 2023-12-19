@@ -118,43 +118,46 @@ Returns associative array:
 SiteContato::all()->pluck('email', 'nome');
 
 Update values on DB:
->>> use \App\Fornecedor;
->>> $fornecedor = Fornecedor->find(1);
->>> $fornecedor->nome = "TESTE";
->>> $fornecedor->save();
+- use \App\Fornecedor;
+- $fornecedor = Fornecedor->find(1);
+- $fornecedor->nome = "TESTE";
+- $fornecedor->save();
 
 Using fill() to update multiple values:
->>> $fornecedor->fill(['nome' => 'New Test', 'site' => 'site.com.br'])->save();
+- $fornecedor->fill(['nome' => 'New Test', 'site' => 'site.com.br'])->save();
 
 Removing data from DB with delete():
 $contato = SiteContato::find(4);
 $contato->delete();
 
 Removing data from DB with destroy('id'):
->>> SiteContato::destroy(7);
+- SiteContato::destroy(7);
 
 Excluding ids with softDelete:
->>> use \App\Fornecedores;
->>> $fornecedor = Fornecedor::find(2);
->>> $fornecedor->delete(); -> same code, but considering softDelete, Laravel only include the value in the field "deleted_at"
+- use \App\Fornecedores;
+- $fornecedor = Fornecedor::find(2);
+- $fornecedor->delete(); -> same code, but considering softDelete, Laravel only include the value in the field "deleted_at"
 
 Forcing deletion of row from DB with forceDelete with softDelete:
->>> use \App\Fornecedores;
->>> $fornecedor2 = Fornecedor::find(2);
->>> $fornecedor2->forceDelete();
+- use \App\Fornecedores;
+- $fornecedor2 = Fornecedor::find(2);
+- $fornecedor2->forceDelete();
 
 Recovering rows that were deleted with softDelete:
->>> Fornecedor::withTrashed()->get(); - returns all results with deleted rows.
->>> Fornecedor::onlyTrashed()->get(); - returns only deleted rows (softDelete).
+- Fornecedor::withTrashed()->get(); - returns all results with deleted rows.
+- Fornecedor::onlyTrashed()->get(); - returns only deleted rows (softDelete).
 
->>> $fornecedores = Fornecedor::onlyTrashed()->get(); - creating a variable to receive deleted rows.
->>> $fornecedores[0]->restore(); -restoring row that was deleted.
+- $fornecedores = Fornecedor::onlyTrashed()->get(); - creating a variable to receive deleted rows.
+- $fornecedores[0]->restore(); -restoring row that was deleted.
 
 Running seeders - necessary to insert runner into DatabaseSeeder.php:
->>>php artisan db:seed
+- php artisan db:seed
 
 Run specific seeder:
->>> php artisan db:seed --class=SiteContatoSeeder
+- php artisan db:seed --class=SiteContatoSeeder
 
 Creating a factory:
->>> php artisan make:factory SiteContatoFactory --model=SiteContato
+- php artisan make:factory SiteContatoFactory --model=SiteContato
+
+Creating middleware and migration file:
+- php artisan make:middleware LogAccess -m
