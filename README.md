@@ -44,7 +44,7 @@ Getting data from database:
 
 
 Is possible to print those values as well:
-p- rint_r($fornecedores->toArray());
+- print_r($fornecedores->toArray());
 
 
 Get specific or multiple object(s) from database:
