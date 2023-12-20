@@ -25,6 +25,11 @@ class LogAcessoMiddleware
         $ip = $request->server->get('REMOTE_ADDR');
         $route = $request->getRequestUri();
         LogAcesso::create(['log' => "IP $ip requested route $route"]);
-        return Response('Middleware');
+
+        // stops here without continuing the request
+        // return Response('Middleware');
+
+        // continues the chain of middlewares
+        return $next($request);
     }
 }

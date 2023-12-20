@@ -1,121 +1,121 @@
 Clear view if not updated when starting serve:
+- php artisan view:clear
 
-php artisan view:clear
 Create features in Laravel, -m is used for migrations:
+- php artisan make:model NameInSingular -m
 
-php artisan make:model NameInSingular -m
 Create a migration:
+- php artisan make:migration create_fornecedores_table
 
-php artisan make:migration create_fornecedores_table
 SQL and system commands:
 
-systemclt status mysql -> show status of mysql
-systemclt start/stop mysql -> start/stop service mysql
+- systemclt status mysql -> show status of mysql
+- systemclt start/stop mysql -> start/stop service mysql
 sudo systemctl enable/disable mysql -> enable/disable sql when system starts
 Check if the extension mysql is loaded:
 
-php -r "var_dump(extension_loaded('pdo_mysql'));"
+- php -r "var_dump(extension_loaded('pdo_mysql'));"
 If it returns false, is necessary to able it on php.ini - delete the ";" in the line extension=pdo_mysql then restart sql service (systemctl restart mysql) If nothing works, it may be necessary to reinstall the php again, making purge and then reinstalling.
 
-sudo apt-get purge 'php*'
-sudo apt-get install php7.4-common php7.4-mysql php7.4-cli
+- sudo apt-get purge 'php*'
+- sudo apt-get install php7.4-common php7.4-mysql php7.4-cli
+
 Artisan commands:
 
-php artisan migrate -> Creates the columns or tables on the DB
-php artisan migrate:rollback -> revert migrate of last migration
-php artisan migrate:rollback --step=2 -> revert the migrations based on the steps in the table migrations.
+- php artisan migrate -> Creates the columns or tables on the DB
+- php artisan migrate:rollback -> revert migrate of last migration
+- php artisan migrate:rollback --step=2 -> revert the migrations based on the steps in the table migrations.
 
 Useful artisan commands:
 
-php artisan migrate:status  - show the list of migrations
-php artisan migrate:reset   - revert/rollback all migrations
-php artisan migrate:refresh - rollback and migrate all migrations
-php artisan migrate:fresh   - drop all objects from database and execute migration
-
+- php artisan migrate:status  - show the list of migrations
+- php artisan migrate:reset   - revert/rollback all migrations
+- php artisan migrate:refresh - rollback and migrate all migrations
+- php artisan migrate:fresh   - drop all objects from database and execute migration
 
 Interactive console (TINKER)
 
-php artisan tinker
+- php artisan tinker
 
 Inserting data on database via tinker:
->>> \App\Fornecedor::create(['nome'=>'Fornecedor ABC', 'site'=>'forncedorabc.com.br', 'uf'=>'SP', 'email'=>'contato@fornecedorabc.com.br']);
+- \App\Fornecedor::create(['nome'=>'Fornecedor ABC', 'site'=>'forncedorabc.com.br', 'uf'=>'SP', 'email'=>'contato@fornecedorabc.com.br']);
 Getting data from database:
-$fornecedores = \App\Fornecedor::all();
+- $fornecedores = \App\Fornecedor::all();
 
 
 Is possible to print those values as well:
-print_r($fornecedores->toArray());
+p- rint_r($fornecedores->toArray());
 
 
 Get specific or multiple object(s) from database:
-$fornecedores = Fornecedor::find(2);
-$fornecedores = Fornecedor::find([1, 2, 3]);
-$contatos = SiteContato::where('column name', 'operator for comparison', 'value')->get();
+- $fornecedores = Fornecedor::find(2);
+- $fornecedores = Fornecedor::find([1, 2, 3]);
+- $contatos = SiteContato::where('column name', 'operator for comparison', 'value')->get();
 - operators: >, >=, <, <=, <>, ==, like
 
 Complex use of where, comparison operators (* >>>use \App\SiteContato):
-$contatos = SiteContato::whereIn('value to compare', 'params');
-$contatos = SiteContato::whereNotIn('value to compare', 'params');
-ex: $contatos = SiteContato::whereIn('motivo_contato', [1, 3])->get();
+- $contatos = SiteContato::whereIn('value to compare', 'params');
+- $contatos = SiteContato::whereNotIn('value to compare', 'params');
+- ex: $contatos = SiteContato::whereIn('motivo_contato', [1, 3])->get();
 
-$contatos = SiteContato::whereBetween('value to compare', 'params');
-$contatos = SiteContato::whereNotBetween('value to compare', 'params');
-ex: $contatos = SiteContato::whereBetween('motivo_contato', [1, 3])->get();
+- $contatos = SiteContato::whereBetween('value to compare', 'params');
+- $contatos = SiteContato::whereNotBetween('value to compare', 'params');
+- ex: $contatos = SiteContato::whereBetween('motivo_contato', [1, 3])->get();
 
-$contatos = SiteContato::where('nome', '<>', 'Fernando')->whereIn('motivo_contato', [1, 2])->get();
-
-SQL:
-SELECT * FROM sg.site_contatos where nome <> 'Fernando' or motivo_contato in(1, 2) or created_at between '2020-08-31 00:00:00' and '2020-08-31 23:59:59';
-tinker:
-$contatos = SiteContato::where('nome', '<>', 'Fernando')->orWhereIn('motivo_contato', [1, 2])->orWhereBetween('created_at', ['2020-08-31 00:00:00', '2020-08-31 23:59:59'])->get();
+- $contatos = SiteContato::where('nome', '<>', 'Fernando')->whereIn('motivo_contato', [1, 2])->get();
 
 SQL:
-SELECT * FROM sg.site_contatos where updated_at is null;
+- SELECT * FROM sg.site_contatos where nome <> 'Fernando' or motivo_contato in(1, 2) or created_at between '2020-08-31 00:00:00' and '2020-08-31 23:59:59';
 tinker:
-$contatos = SiteContato::whereNull('updated_at')->get();
-SQL:
-SELECT * FROM sg.site_contatos where updated_at is not null;
-tinker:
-$contatos = SiteContato::whereNotNull('updated_at')->get();
-
-
-SELECT * FROM sg.site_contatos where created_at = '2020-08-31';
-$contatos = SiteContato::whereDate('created_at', '2020-08-31')->get();
-$contatos = SiteContato::whereDay('created_at', '31')->get();
-$contatos = SiteContato::whereMonth('created_at', '11')->get();
-$contatos = SiteContato::whereYear('created_at', '2023')->get();
-$contatos = SiteContato::whereTime('created_at', '=', '20:30:00')->get();
-
-- Get equal columns:
-$contatos = SiteContato::whereColumn('created_at', 'updated_at')->get();
-- Comparing:
-$contatos = SiteContato::whereColumn('created_at', '<>', 'updated_at')->get();
+- $contatos = SiteContato::where('nome', '<>', 'Fernando')->orWhereIn('motivo_contato', [1, 2])->orWhereBetween('created_at', ['2020-08-31 00:00:00', '2020-08-31 23:59:59'])->get();
 
 SQL:
-SELECT * FROM sg.site_contatos where (nome = 'Jorge' or nome = 'Ana') and (motivo_contato in (1, 2) or id between 4 and 6);
+- SELECT * FROM sg.site_contatos where updated_at is null;
 tinker:
-$contatos = SiteContato::where(function($query){$query->where('nome', 'Jorge')->orWhere('nome', 'Ana');})->where(function($query){$query->whereIn('motivo_contato', [1, 2])->orWhereBetween('id', [4, 6]);})->get();
+- $contatos = SiteContato::whereNull('updated_at')->get();
+SQL:
+- SELECT * FROM sg.site_contatos where updated_at is not null;
+tinker:
+- $contatos = SiteContato::whereNotNull('updated_at')->get();
 
 
-$contatos = SiteContato::orderBy('motivo_contato')->orderBy('nome', 'asc')->get();
+- SELECT * FROM sg.site_contatos where created_at = '2020-08-31';
+- $contatos = SiteContato::whereDate('created_at', '2020-08-31')->get();
+- $contatos = SiteContato::whereDay('created_at', '31')->get();
+- $contatos = SiteContato::whereMonth('created_at', '11')->get();
+- $contatos = SiteContato::whereYear('created_at', '2023')->get();
+- $contatos = SiteContato::whereTime('created_at', '=', '20:30:00')->get();
+
+Get equal columns:
+- $contatos = SiteContato::whereColumn('created_at', 'updated_at')->get();
+Comparing:
+- $contatos = SiteContato::whereColumn('created_at', '<>', 'updated_at')->get();
+
+SQL:
+- SELECT * FROM sg.site_contatos where (nome = 'Jorge' or nome = 'Ana') and (motivo_contato in (1, 2) or id between 4 and 6);
+tinker:
+- $contatos = SiteContato::where(function($query){$query->where('nome', 'Jorge')->orWhere('nome', 'Ana');})->where(function($query){$query->whereIn('motivo_contato', [1, 2])->orWhereBetween('id', [4, 6]);})->get();
+
+
+- $contatos = SiteContato::orderBy('motivo_contato')->orderBy('nome', 'asc')->get();
 
 
 COLLECTIONS:
 
-$contatos = SiteContato::where('id', '>', 3)->get(); - creates a collection
-$contatos->first(); - returns first element from the collection
-$contatos->last(); - returns last element from the collection
-$contatos->reverse(); - returns collection in reverse order
+- $contatos = SiteContato::where('id', '>', 3)->get(); - creates a collection
+- $contatos->first(); - returns first element from the collection
+- $contatos->last(); - returns last element from the collection
+- $contatos->reverse(); - returns collection in reverse order
 
 
-SiteContato::all()->toArray();
-SiteContato::all()->toJson();
+- SiteContato::all()->toArray();
+- SiteContato::all()->toJson();
 
 Get all emails:
-SiteContato::all()->pluck('email');
+- SiteContato::all()->pluck('email');
 
 Returns associative array:
-SiteContato::all()->pluck('email', 'nome');
+- SiteContato::all()->pluck('email', 'nome');
 
 Update values on DB:
 - use \App\Fornecedor;
