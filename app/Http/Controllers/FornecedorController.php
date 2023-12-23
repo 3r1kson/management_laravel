@@ -11,8 +11,17 @@ class FornecedorController extends Controller
         return view('app.fornecedor.index');
     }
 
-    public function list() {
-        return view('app.fornecedor.list');
+    public function list(Request $request) {
+
+        // dd($request->all());
+
+        $fornecedores = Fornecedor::where('nome', 'like', '%'.$request->input('nome').'%')
+            ->where('site', 'like', '%'.$request->input('site').'%')
+            ->where('uf', 'like', '%'.$request->input('uf').'%')
+            ->where('email', 'like', '%'.$request->input('email').'%')
+            ->get();
+
+        return view('app.fornecedor.list', ['fornecedores' => $fornecedores]);
     }
 
     public function add(Request $request) {

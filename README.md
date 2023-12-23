@@ -66,16 +66,19 @@ Complex use of where, comparison operators (* >>>use \App\SiteContato):
 
 SQL:
 - SELECT * FROM sg.site_contatos where nome <> 'Fernando' or motivo_contato in(1, 2) or created_at between '2020-08-31 00:00:00' and '2020-08-31 23:59:59';
-tinker:
+
+Tinker:
 - $contatos = SiteContato::where('nome', '<>', 'Fernando')->orWhereIn('motivo_contato', [1, 2])->orWhereBetween('created_at', ['2020-08-31 00:00:00', '2020-08-31 23:59:59'])->get();
 
 SQL:
 - SELECT * FROM sg.site_contatos where updated_at is null;
-tinker:
+
+Tinker:
 - $contatos = SiteContato::whereNull('updated_at')->get();
 SQL:
 - SELECT * FROM sg.site_contatos where updated_at is not null;
-tinker:
+
+Tinker:
 - $contatos = SiteContato::whereNotNull('updated_at')->get();
 
 
@@ -93,7 +96,8 @@ Comparing:
 
 SQL:
 - SELECT * FROM sg.site_contatos where (nome = 'Jorge' or nome = 'Ana') and (motivo_contato in (1, 2) or id between 4 and 6);
-tinker:
+
+Tinker:
 - $contatos = SiteContato::where(function($query){$query->where('nome', 'Jorge')->orWhere('nome', 'Ana');})->where(function($query){$query->whereIn('motivo_contato', [1, 2])->orWhereBetween('id', [4, 6]);})->get();
 
 
@@ -127,8 +131,8 @@ Using fill() to update multiple values:
 - $fornecedor->fill(['nome' => 'New Test', 'site' => 'site.com.br'])->save();
 
 Removing data from DB with delete():
-$contato = SiteContato::find(4);
-$contato->delete();
+- $contato = SiteContato::find(4);
+- $contato->delete();
 
 Removing data from DB with destroy('id'):
 - SiteContato::destroy(7);
