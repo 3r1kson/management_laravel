@@ -45,6 +45,7 @@ Route::middleware(['log.access', 'authentication:padrao, visitante'])->prefix('/
     Route::post('/fornecedor/list', 'FornecedorController@list')->name('app.fornecedor.list');
     Route::get('/fornecedor/add', 'FornecedorController@add')->name('app.fornecedor.add');
     Route::post('/fornecedor/add', 'FornecedorController@add')->name('app.fornecedor.add');
+    Route::get('/fornecedor/edit/{id}/{msg?}', 'FornecedorController@edit')->name('app.fornecedor.edit');
 
     Route::get('/produto', 'ProdutoController@index')->name('app.produto');
 });

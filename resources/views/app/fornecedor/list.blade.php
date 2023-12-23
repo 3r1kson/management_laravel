@@ -29,12 +29,12 @@
                 <tbody>
                     @foreach ($fornecedores as $fornecedor )
                         <tr>
-                            <td>{{$fornecedor->nome}}</td>SS
+                            <td>{{$fornecedor->nome}}</td>
                             <td>{{$fornecedor->site}}</td>
                             <td>{{$fornecedor->uf}}</td>
                             <td>{{$fornecedor->email}}</td>
                             <td>Excluir</td>
-                            <td>Atualizar</td>
+                            <td><a href="{{ route('app.fornecedor.edit', $fornecedor->id) }}">Editar</a></td>
                         </tr>
                     @endforeach
                 </tbody>
