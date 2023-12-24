@@ -41,17 +41,20 @@ Route::middleware(['log.access', 'authentication:padrao, visitante'])->prefix('/
     Route::get('/sair', 'LoginController@sair')->name('app.sair');
     Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
 
+    // fornecedores
     Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
-
     Route::get('/fornecedor/list', 'FornecedorController@list')->name('app.fornecedor.list');
     Route::post('/fornecedor/list', 'FornecedorController@list')->name('app.fornecedor.list');
-
     Route::get('/fornecedor/add', 'FornecedorController@add')->name('app.fornecedor.add');
     Route::post('/fornecedor/add', 'FornecedorController@add')->name('app.fornecedor.add');
-    
     Route::get('/fornecedor/edit/{id}/{msg?}', 'FornecedorController@edit')->name('app.fornecedor.edit');
+    Route::get('/fornecedor/exclude/{id}', 'FornecedorController@exclude')->name('app.fornecedor.exclude');
 
-    Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+    // produto
+    // Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+    // Route::get('/produto/create', 'ProdutoController@create')->name('app.produto.create');
+    Route::resource('produto', 'ProdutoController');
+    
 });
 
 Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('site.teste');

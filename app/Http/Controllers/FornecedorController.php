@@ -19,6 +19,7 @@ class FornecedorController extends Controller
             ->where('site', 'like', '%'.$request->input('site').'%')
             ->where('uf', 'like', '%'.$request->input('uf').'%')
             ->where('email', 'like', '%'.$request->input('email').'%')
+            // ->get();
             ->paginate(10);
 
         return view('app.fornecedor.list', ['fornecedores' => $fornecedores, 'request' => $request->all()]);
@@ -73,5 +74,14 @@ class FornecedorController extends Controller
         $fornecedor = Fornecedor::find($id);
 
         return view('app.fornecedor.add', ['fornecedor' => $fornecedor, 'msg' => $msg]);
+    }
+
+    public function exclude($id) {
+        // soft Delete
+        Fornecedor::find($id)->delete();
+
+        // if necessary to delete value from DB
+        // Fornecedor::find($id)->forceDelete();
+        return redirect()->route('app.fornecedor.list');
     }
 }

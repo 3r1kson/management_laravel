@@ -75,6 +75,7 @@ SQL:
 
 Tinker:
 - $contatos = SiteContato::whereNull('updated_at')->get();
+
 SQL:
 - SELECT * FROM sg.site_contatos where updated_at is not null;
 
@@ -165,3 +166,6 @@ Creating a factory:
 
 Creating middleware and migration file:
 - php artisan make:middleware LogAccess -m
+
+Creating controller and models Laravel based using resource:
+- php artisan make:controller --resource ProdutoController --model=Produto
