@@ -67,7 +67,7 @@ class ProdutoController extends Controller
             ];
             
             $request->validate($regras, $feedback);
-            
+
             Produto::create($request->all());
             $msg = 'Cadastro realizado com Sucesso';
         }
@@ -93,7 +93,7 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        //
+        return view('app.produto.show',['produto' => $produto]);
     }
 
     /**
