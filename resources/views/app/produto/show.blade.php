@@ -10,7 +10,7 @@
     <div class="menu">
         <ul>
             <li><a href="{{ route('produto.index') }}">Voltar</a></li>
-            <li><a href="">Consulta</a></li>
+            {{-- <li><a href="">Consulta</a></li> --}}
         </ul>
     </div>
     <div class="informacao-pagina">
