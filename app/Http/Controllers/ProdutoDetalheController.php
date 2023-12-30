@@ -88,7 +88,8 @@ class ProdutoDetalheController extends Controller
     public function edit($produtoDetalheID)
     {
         // $produtoDetalhe = (ProdutoDetalhe::all()->where('produto_id', $produtoDetalheID)->all());
-        $produtoDetalhe = ItemDetalhe::find($produtoDetalheID)->all();
+        // inserting eager loading for $produtoDetalhe
+        $produtoDetalhe = ItemDetalhe::with(['item'])->find($produtoDetalheID)->all();
         $unidades = Unidade::all();
         return view('app.produto_detalhe.edit', ['produto_detalhe' => $produtoDetalhe, 'unidades' => $unidades]);
     }
