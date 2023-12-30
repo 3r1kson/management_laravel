@@ -54,6 +54,9 @@ Route::middleware(['log.access', 'authentication:padrao, visitante'])->prefix('/
     // Route::get('/produto', 'ProdutoController@index')->name('app.produto');
     // Route::get('/produto/create', 'ProdutoController@create')->name('app.produto.create');
     Route::resource('produto', 'ProdutoController');
+
+    //produtos detalhes
+    Route::resource('produto-detalhe', 'ProdutoDetalheController');
     
 });
 
