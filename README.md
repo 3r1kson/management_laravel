@@ -26,7 +26,7 @@ Artisan commands:
 - php artisan migrate:rollback -> revert migrate of last migration
 - php artisan migrate:rollback --step=2 -> revert the migrations based on the steps in the table migrations.
 
-Useful artisan commands:
+Useful artisan commands (MIGRATION):
 
 - php artisan migrate:status  - show the list of migrations
 - php artisan migrate:reset   - revert/rollback all migrations

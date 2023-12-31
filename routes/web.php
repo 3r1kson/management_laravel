@@ -39,7 +39,7 @@ Route::post('/login', 'LoginController@authentication')->name('site.login');
 Route::middleware(['log.access', 'authentication:padrao, visitante'])->prefix('/app')->group(function() {
     Route::get('/home', 'HomeController@index')->name('app.home');
     Route::get('/sair', 'LoginController@sair')->name('app.sair');
-    Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
+    // Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
 
     // fornecedores
     Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
@@ -57,6 +57,10 @@ Route::middleware(['log.access', 'authentication:padrao, visitante'])->prefix('/
 
     //produtos detalhes
     Route::resource('produto-detalhe', 'ProdutoDetalheController');
+
+    Route::resource('cliente', 'ClienteController');
+    Route::resource('pedido', 'PedidoController');
+    Route::resource('pedido-produto', 'PedidoProdutoController');
     
 });
 
