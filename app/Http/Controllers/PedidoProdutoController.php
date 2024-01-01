@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pedido;
+use App\Produto;
+use App\PedidoProduto;
 
 class PedidoProdutoController extends Controller
 {
@@ -21,9 +24,11 @@ class PedidoProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Pedido $pedido)
     {
-        //
+        $produtos = Produto::all();
+        $pedido->produtos; //eager loading
+        return view('app.pedido_produto.create', ['pedido' => $pedido, 'produtos' => $produtos]);
     }
 
     /**
@@ -32,9 +37,33 @@ class PedidoProdutoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Pedido $pedido)
     {
-        //
+        $regras = [
+            'produto_id' => 'exists:produtos,id',
+            'quantidade' => 'required'
+        ];
+
+        $feedback = [
+            'produto_id.exists' => 'O produto informado nao existe',
+            'required' => 'O campo :attribute deve possuir um valor valido'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        // $pedidoProduto = new PedidoProduto();
+        // $pedidoProduto->pedido_id = $pedido->id;
+        // $pedidoProduto->produto_id = $request->get('produto_id');
+        // $pedidoProduto->save();
+
+        // $pedido->produtos // the return is the relationship data
+
+        $pedido->produtos()->attach(
+            $request->get('produto_id'),
+            ['quantidade' => $request->get('quantidade')]
+        ); // returns an object
+
+        return redirect()->route('pedido-produto.create', ['pedido' => $pedido->id]);
     }
 
     /**
@@ -74,11 +103,28 @@ class PedidoProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int PedidoProduto $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    // public function destroy(Pedido $pedido, Produto $produto)
+    public function destroy(PedidoProduto $pedidoProduto, $pedido_id)
+
     {
-        //
+        // print_r($pedido->getAttributes());
+        // echo '<br>';
+        // print_r($produto->getAttributes());
+
+        // convetional method
+        // PedidoProduto::where([
+        //     'pedido_id' => $pedido->id,
+        //     'produto_id' => $produto->id
+        // ])->delete();
+
+        // detach method (delete by relationship belongsToMany)
+        // $pedido->produtos()->detach($produto->id); // pedido_id already is in the context
+
+        $pedidoProduto->delete();
+
+        return redirect()->route('pedido-produto.create', ['pedido' => $pedido_id ]);
     }
 }

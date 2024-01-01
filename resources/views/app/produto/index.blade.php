@@ -30,6 +30,9 @@
                         <th></th>
                         <th></th>
                     </tr>
+                    <tr>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach ($produtos as $produto )
@@ -54,6 +57,16 @@
                             <td><a href="{{ route('produto.edit', ['produto' => $produto->id])}}">Editar</a></td>
                             {{-- <td><a href="{{ route('app.fornecedor.exclude', $produto->id) }}">Excluir</a></td>
                             <td><a href="{{ route('app.fornecedor.edit', $produto->id) }}">Editar</a></td> --}}
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                            <p>Pedidos</p>
+                            @foreach ($produto->pedidos as $pedido)
+                                <a href="{{ route('pedido-produto.create', ['pedido' => $pedido->id]) }}">
+                                    Pedido: {{ $pedido->id }},
+                                </a>
+                            @endforeach
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
